@@ -8,13 +8,16 @@
 </head>
 <body>
 <div class="sessio">
-		
-<form action="/login" method="get">
-    <button type="submit">Iniciar sessio</button>
+<div class="dropdown">
+  <button class="dropbtn">{{ auth()->user()->username }}</button>
+  <div class="dropdown-content">
+    <a href="/edit">Perfil</a>
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit">Cerrar sesión</button>
 </form>
-<form action="/registrar" method="get">
-<button type="submit">Registrar-se</button>
-</form>
+  </div>
+</div>
 </div>
 <div class="contenidor">
     <h1>Articles</h1>

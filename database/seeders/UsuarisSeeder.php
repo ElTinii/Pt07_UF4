@@ -23,7 +23,7 @@ class UsuarisSeeder extends Seeder
         //Insertem els usuaris
         DB::table('users')->insert([
             'username' => 'alex',
-            'correu' => 'thos.vazquez.alex@gmail.com',
+            'email' => 'thos.vazquez.alex@gmail.com',
             'password' => bcrypt('12341234_A'),
             'data_naixement' => '2003-11-14',
             'created_at' => now(),

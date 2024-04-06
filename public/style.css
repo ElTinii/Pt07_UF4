@@ -91,6 +91,33 @@ a{
     text-decoration: none;
     color: #007bff;
 }
-div.flex.justify-between.flex-1, div.text-sm.text-gray-700.leading-5{
+div.flex.justify-between.flex-1, div.text-sm.text-gray-700{
     display: none;
 }
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+  }
