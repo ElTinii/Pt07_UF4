@@ -49,3 +49,15 @@ Route::get('/profile', function () {
 
 //Aqui verifiquem la contrasenya del usuari
 Route::post('/verify-password', [PasswordController::class, 'verify']);
+
+//Aqui cridem a la vista de tornar per a que l'usuari pugui tornar enrere i es faci un canvi a la base de dades
+Route::post('/return', [Controller::class, 'return']);
+
+//Aqui cridem a la vista de eliminar compte per a que l'usuari pugui eliminar el seu compte
+Route::post('/delete-account', [Controller::class, 'deleteAccount']);
+
+//Cridem aquesta vista per a que l'usuari pugui confirmar que vol eliminar el seu compte
+Route::post('/confirm-delete', 'Controller@confirmDelete');
+
+//Aqui cridem a la vista de perfil per a que l'usuari pugui modificar les seves dades
+Route::post('/update-user', [Controller::class, 'updateUser']);

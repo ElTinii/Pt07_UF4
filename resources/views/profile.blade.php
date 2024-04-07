@@ -7,11 +7,25 @@
     <link rel="stylesheet" href="perfil.css">
 </head>
 <body>
+    @if (session('delete_account'))
+        <div class="alert">
+            ¿Estás seguro de que quieres eliminar tu cuenta?
+            <form method="POST" action="/confirm-delete">
+                @csrf
+                <button type="submit">Sí, eliminar mi cuenta</button>
+            </form>
+            <a href="/usuari">No, volver a mi perfil</a>
+        </div>
+    @endif
     <div class="container">
         <div class="profile">
             <img src="profile_picture.jpg" alt="Foto de perfil">
-            <h1>Nombre del Usuario</h1>
-            <p>Correo Electrónico: <input type="text" name="" id="" value="{{ auth()->user()->email }}" {{ auth()->user()->password_verified ? '' : 'disabled' }}></p>
+            <form method="POST" action="/update-user">
+            @csrf
+            <p>Nom d'Usuari <input type="text" name="username" id="" value="{{ auth()->user()->username }}" {{ auth()->user()->password_verified ? '' : 'disabled' }}></p>
+            <p>Correo Electrónico: <input type="email" name="email" id="" value="{{ auth()->user()->email }}" {{ auth()->user()->password_verified ? '' : 'disabled' }}></p>
+            <button type="submit" {{ auth()->user()->password_verified ? '' : 'disabled' }}>Enviar</button>
+            </form>
         </div>
         <div class="actions">
         <form method="POST" action="/verify-password">
@@ -22,8 +36,14 @@
             </div>
             <button type="submit">Verificar Contraseña</button>
         </form>
-        <button {{ auth()->user()->password_verified ? '' : 'disabled' }}>Enviar</button>
-        <button {{ auth()->user()->password_verified ? '' : 'disabled' }}>Eliminar Cuenta</button>
+        <form method="POST" action="/delete-account">
+            @csrf
+            <button type="submit" {{ auth()->user()->password_verified ? '' : 'disabled' }}>Eliminar Cuenta</button>
+        </form>
+        <form method="POST" action="/return">
+    @csrf
+    <button type="submit">Tornar</button>
+</form>
         </div>
         @if ($errors->any())
     <div class="alert alert-danger">
@@ -34,6 +54,6 @@
         </ul>
     </div>
 @endif
-    </div>
+</div>
 </body>
 </html>
