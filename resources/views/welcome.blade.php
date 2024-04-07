@@ -12,7 +12,7 @@
 <form action="/login" method="get">
     <button type="submit">Iniciar sessio</button>
 </form>
-<form action="/registrar" method="get">
+<form action="/register" method="get">
 <button type="submit">Registrar-se</button>
 </form>
 </div>

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -21,6 +24,7 @@
 </div>
 <div class="contenidor">
     <h1>Articles</h1>
+    <button type="button" data-toggle="modal" data-target="#afegir">Afegir</button>
     <form method="POST" action="/">
         @csrf
         <select name="option" id="option" onchange="this.form.submit()">
@@ -37,12 +41,65 @@
                 <tr>
                     <td>{{ $article->article_id }}.</td>
                     <td>{{ $article->Titol }}</td>
+                    <td><button type="button" data-toggle="modal" data-target="#modificar">Modificar</button></td>
+                    <td>
+                        <form method="POST" action="/delete-article/{{ $article->article_id }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </table>
 
         {{ $articles->links() }}
     </section>
+    
+    <div class="modal fade" id="modificar" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content custom-modal-color">
+                    <!-- En tu modal de modificación -->
+                    <form id="modificar" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">   
+                        <label for="titol">Titol</label><br>
+                        <input type="text" name="titol" id="titol" value=""><br>
+                        <label for="text">Contingut</label><br>
+                        <textarea name="text" id="text" cols="30" rows="10" value=""></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+                            <button type="submit" id="eliminar" class="btn btn-danger">Modificar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="afegir" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content custom-modal-color">
+                    <form id="afegir" method="post" action="/add-article">
+                        @csrf
+                        <div class="modal-header">
+                            <h1>Article</h1>
+                        </div>
+                        <div class="modal-body">    
+                            <label for="titol">Titol</label><br>
+                            <input type="text" name="titol" id="titol" ><br>
+                            <label for="text">Contingut</label><br>
+                            <input type="text" name="text" id="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+                            <button type="submit" id="eliminar" class="btn btn-danger">Afegir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 </div>
 </body>
 </html>

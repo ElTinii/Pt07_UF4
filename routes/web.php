@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,11 +35,6 @@ Route::middleware('auth')->group(function () {
 //Aqui estem cridant a la vista d'inici sessio
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-//Aqui estem cridant a la vista de registre
-Route::get('/registrar', function () {
-    return view('registrar');
-});
-
 Route::get('/usuari', [Controller::class, 'show'])->middleware('auth');
 require __DIR__.'/auth.php';
 
@@ -61,3 +57,12 @@ Route::post('/confirm-delete', 'Controller@confirmDelete');
 
 //Aqui cridem a la vista de perfil per a que l'usuari pugui modificar les seves dades
 Route::post('/update-user', [Controller::class, 'updateUser']);
+
+//Cridem el cotrolador per eliminar l'article que ens pasa per parametre
+Route::delete('/delete-article/{id}', [ArticleController::class, 'delete']);
+
+//Aixi cridem per fer la modificacio de la base de dades
+Route::put('/usuari/{id}', [ArticleController::class, 'update']);
+
+//Per afegir un article
+Route::post('/add-article', [ArticleController::class, 'store']);

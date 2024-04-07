@@ -25,9 +25,7 @@ class UsuarisSeeder extends Seeder
             'username' => 'alex',
             'email' => 'thos.vazquez.alex@gmail.com',
             'email_verified_at' => now(),
-            'password_verified' => false,
             'password' => bcrypt('12341234_A'),
-            'data_naixement' => '2003-11-14',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
