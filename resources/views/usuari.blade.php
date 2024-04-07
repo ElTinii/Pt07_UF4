@@ -11,7 +11,7 @@
 <div class="dropdown">
   <button class="dropbtn">{{ auth()->user()->username }}</button>
   <div class="dropdown-content">
-    <a href="/edit">Perfil</a>
+    <a href="/profile">Perfil</a>
 <form method="POST" action="{{ route('logout') }}">
     @csrf
     <button type="submit">Cerrar sesión</button>

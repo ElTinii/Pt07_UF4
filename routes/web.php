@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Controllers\Auth\PasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +42,10 @@ Route::get('/registrar', function () {
 Route::get('/usuari', [Controller::class, 'show'])->middleware('auth');
 require __DIR__.'/auth.php';
 
-Route::get('/edit', function () {
-    return view('edit');
+//Aqui estem cridant a la vista de perfil mirant si esta autenticat
+Route::get('/profile', function () {
+    return view('profile');
 })->middleware('auth');
+
+//Aqui verifiquem la contrasenya del usuari
+Route::post('/verify-password', [PasswordController::class, 'verify']);

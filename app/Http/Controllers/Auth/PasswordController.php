@@ -26,4 +26,18 @@ class PasswordController extends Controller
 
         return back()->with('status', 'password-updated');
     }
+
+    public function verify(Request $request)
+    {
+        $credentials = $request->only('password');
+
+        if (Hash::check($credentials['password'], auth()->user()->password)) {
+            $user = auth()->user();
+            $user->password_verified = true;
+            $user->save();
+            return redirect('/profile');
+        } else {
+            return redirect('/profile')->withErrors(['password' => 'La contraseña es incorrecta']);
+        }
+    }
 }

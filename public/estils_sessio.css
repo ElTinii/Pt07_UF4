@@ -60,3 +60,6 @@ button {
 button:hover {
     background-color: #999;
 }
+button:disabled {
+    background-color: #808080; /* Cambia esto al color gris que prefieras */
+}
