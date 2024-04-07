@@ -5,7 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 
 class ArticleController extends Controller
-{
+{  
+    //Aixo el que fa es eliminar els 
     public function delete($id)
     {
         $article = Article::where('article_id', $id)->first();

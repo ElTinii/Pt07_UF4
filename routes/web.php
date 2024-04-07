@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\ArticleController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,3 +68,26 @@ Route::put('/usuari/{id}', [ArticleController::class, 'update']);
 
 //Per afegir un article
 Route::post('/add-article', [ArticleController::class, 'store']);
+
+//Oauth google Login i registrar-se 
+Route::get('/login-google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/google-callback', function () {
+    $user = Socialite::driver('google')->user();
+    $userExists = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
+    if($userExists){
+        Auth::login($userExists);
+    }else{
+        $userNew = User::create([
+            'username' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+            'external_id' => $user->id,
+            'external_auth' => 'google',
+        ]);
+        Auth::login($userNew);
+    }
+    return redirect('/usuari');
+});

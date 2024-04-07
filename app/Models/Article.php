@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
+    //He afegit el camp title i el content per poder afegir un article
     protected $fillable = [
         'title', 
         'content'

@@ -17,10 +17,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    //He afegit mes camps que eren necesaris per omplir la taula
     protected $fillable = [
         'username',
         'email',
         'password',
+        'avatar',
+        'external_id',
+        'external_auth',
     ];
 
     /**
