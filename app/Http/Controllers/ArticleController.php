@@ -23,8 +23,9 @@ class ArticleController extends Controller
         return view('usuari', ['article' => $article]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $id = $request->article_id;
         $article = Article::where('article_id', $id)->first();
         $article->titol = $request->titol;
         $article->text = $request->text;

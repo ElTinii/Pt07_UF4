@@ -8,11 +8,17 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Article;
 
 class Controller extends BaseController
 {
 public function index(Request $request)
 {
+    if (Auth::check()) {
+        return redirect('/usuari');
+    }
+
     if ($request->has('option')) {
         $request->session()->put('per_page', $request->input('option'));
     }
@@ -46,8 +52,12 @@ public function return(Request $request)
 
 public function deleteAccount(Request $request)
 {
-    $request->session()->flash('delete_account', true);
-    return redirect('/profile');
+    if (Auth::check()) {
+        $id = Auth::user()->id;
+    }
+    Article::where('user_id', $id)->update(['user_id' => null]);
+    User::find($id)->delete();
+    return redirect('/login');
 }
 
 public function confirmDelete()

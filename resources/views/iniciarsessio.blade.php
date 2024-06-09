@@ -15,6 +15,11 @@
         <label for="password">Contrasenya</label>
         <input type="password" name="password" id="password" placeholder="Escriu aqui la teva contrasenya"><br>
         <a href="">Has oblidat la contrasenya?</a> <br>
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <input type="submit" value="Enviar" name="enviar"><br>
     </form>
 </body>

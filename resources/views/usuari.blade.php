@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/style.css">
+    <script src="/script.js"></script>
 </head>
 <body>
 <div class="sessio">
 <div class="dropdown">
-  <button class="dropbtn">{{ auth()->user()->username }}</button>
-  <div class="dropdown-content">
-    <a href="/profile">Perfil</a>
-<form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit">Cerrar sesión</button>
-</form>
-  </div>
+    <button class="dropbtn">{{ auth()->user()->username }}</button>
+    <div class="dropdown-content dropdown-menu-right">
+        <a href="/profile">Perfil</a>
+        <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit">Cerrar sesión</button>
+        </form>
+    </div>
+</div>
 </div>
 </div>
 <div class="contenidor">
@@ -41,12 +43,12 @@
                 <tr>
                     <td>{{ $article->article_id }}.</td>
                     <td>{{ $article->Titol }}</td>
-                    <td><button type="button" data-toggle="modal" data-target="#modificar">Modificar</button></td>
+                    <td><button type="button" data-toggle="modal" data-target="#modificar" data-id="{{ $article->article_id }}">Modificar</button></td>
                     <td>
                         <form method="POST" action="/delete-article/{{ $article->article_id }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Eliminar</button>
+                            <button type="submit" onclick="return confirm('¿Estás segur que vols eliminar aquest article?');">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -60,9 +62,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content custom-modal-color">
                     <!-- En tu modal de modificación -->
-                    <form id="modificar" method="post">
+                    <form id="modificar" method="post" action="/modificarArticle">
                         @csrf
-                        @method('PUT')
                         <div class="modal-body">   
                         <label for="titol">Titol</label><br>
                         <input type="text" name="titol" id="titol" value=""><br>

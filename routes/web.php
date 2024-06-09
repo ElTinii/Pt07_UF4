@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\ArticleController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,6 @@ use App\Models\User;
 Route::get('/', function () {
     return view('welcome');
 });
-
 //Cridem al controlador
 Route::get('/', [Controller::class, 'index']);
 //Cridem al post del controlador
@@ -33,9 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-//Aqui estem cridant a la vista d'inici sessio
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::get('/usuari', [Controller::class, 'show'])->middleware('auth');
 require __DIR__.'/auth.php';
@@ -64,15 +61,21 @@ Route::post('/update-user', [Controller::class, 'updateUser']);
 Route::delete('/delete-article/{id}', [ArticleController::class, 'delete']);
 
 //Aixi cridem per fer la modificacio de la base de dades
-Route::put('/usuari/{id}', [ArticleController::class, 'update']);
+Route::post('/modificarArticle', [ArticleController::class, 'update']);
 
 //Per afegir un article
 Route::post('/add-article', [ArticleController::class, 'store']);
+
+//Per a que l'usuari pugui modificar la seva contrasenya
+Route::post('/canviarContrasenya', [ProfileController::class, 'canviarContrasenya']);
 
 //Oauth google Login i registrar-se 
 Route::get('/login-google', function () {
     return Socialite::driver('google')->redirect();
 });
+
+//Foto de perfil
+Route::post('/fotoPerfil', [ProfileController::class, 'afegirFoto']);
 
 Route::get('/google-callback', function () {
     $user = Socialite::driver('google')->user();
@@ -80,6 +83,12 @@ Route::get('/google-callback', function () {
     if($userExists){
         Auth::login($userExists);
     }else{
+        // Check if email already exists
+        $emailExists = User::where('email', $user->email)->first();
+        if ($emailExists) {
+            return redirect('/login')->with('error', 'El correu ja està registrat amb un altre compte. Inicia sessió amb el teu correu i contrasenya.');
+        }
+
         $userNew = User::create([
             'username' => $user->name,
             'email' => $user->email,

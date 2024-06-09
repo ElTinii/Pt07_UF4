@@ -8,7 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * Si vols afegir articles a la teva base de dades executa la comanda 'php artisan db:seed --class=ArticlesTableSeeder' aixi s'afegiran uns articles per defecte.
+     * Si vols afegir articles a la teva base de dades executa la comanda 'php artisan db:seed --class=ArticlesSeeder' aixi s'afegiran uns articles per defecte.
      */
     public function up(): void
     {
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id('article_id');
             $table->string('Titol');
             $table->text('text')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
