@@ -25,13 +25,13 @@ class ArticleController extends Controller
 
     public function update(Request $request)
     {
-        $id = $request->article_id;
+        $id = $request->id;
         $article = Article::where('article_id', $id)->first();
         $article->titol = $request->titol;
         $article->text = $request->text;
         $article->save();
 
-        return redirect('/usuari/' . $id);
+        return redirect('/usuari');
     }
 
     public function edit($id)

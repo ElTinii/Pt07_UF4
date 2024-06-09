@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/style.css">
-    <script src="/script.js"></script>
+    <script defer type="module" src="{{ asset('js/script.js') }}"></script>
 </head>
 <body>
 <div class="sessio">
@@ -43,7 +43,7 @@
                 <tr>
                     <td>{{ $article->article_id }}.</td>
                     <td>{{ $article->Titol }}</td>
-                    <td><button type="button" data-toggle="modal" data-target="#modificar" data-id="{{ $article->article_id }}">Modificar</button></td>
+                    <td><button type="button" data-toggle="modal" data-target="#modificar" data-id="{{ $article->article_id }}" data-titol="{{$article->Titol}}" data-text="{{$article->text}}">Modificar</button></td>
                     <td>
                         <form method="POST" action="/delete-article/{{ $article->article_id }}">
                             @csrf
@@ -69,6 +69,7 @@
                         <input type="text" name="titol" id="titol" value=""><br>
                         <label for="text">Contingut</label><br>
                         <textarea name="text" id="text" cols="30" rows="10" value=""></textarea>
+                        <input type="text" name="id" id="id" value="" hidden>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
